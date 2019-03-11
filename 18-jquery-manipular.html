@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>JQuery: Ejemplos de manipulación e iteración</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+  <table id="invitados" class="tabla-con-borde">
+    <caption>Invitados a la reunión</caption>
+    <colgroup>
+      <col>
+      <col>
+      <col>
+      <col>
+    </colgroup>
+    <thead>
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">Teléfono</th>
+        <th scope="col">Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+    <tfoot>
+      <tr><td colspan="4">No hay invitados aún</td></tr>
+    </tfoot>
+  </table>
+
+  <a href="#" id="link_agregar_invitado">Agregar Invitado</a> |
+  <a href="#" id="link_vaciar_invitados">Eliminar todos los invitados</a> |
+  <a href="#" id="link_mostrar_apellidos">Mostrar todos los Apellidos</a>
+
+  <div id="nuevo_invitado" style="display: none;">
+    <form id="frm_nuevo_invitado">
+      <fieldset>
+        <legend>Datos del Nuevo Invitado</legend>
+        <label for="nombre">Nombre:</label>
+        <input type="text" name="nombre" id="nombre">
+        <label for="apellido">Apellido:</label>
+        <input type="text" name="apellido" id="apellido">
+        <label for="telefono">Teléfono (7 dígitos):</label>
+        <input type="tel" name="telefono" id="telefono"> <span id="ayuda_telefono"></span>
+      </fieldset>
+      <input type="button" value="Agregar" id="btn_agregar_invitado">
+      <input type="reset" value="Cancelar" id="btn_cancelar">
+    </form>
+  </div>
+  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="manipular-jquery.js"></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>JS: Números</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <h1>JS: Números</h1>
+  <script>
+  // Números en formato decimal
+  var x = 5;
+  x = 3.224E-20; // notación "científica" o exponencial
+  x = -32.44;
+  // Cuidado con el cero a la izquierda: se usa para formato octal
+  x = 020;
+  console.log(x); // 16 (base 10) = 20 (base 8)
+
+  // Formato binario: comienza con 0b ó 0B
+  x = 0b110110;
+  console.log(x); // 54
+
+  // Formato hexadecimal: comienza con 0x ó 0X
+  x = 0xACA;
+  console.log(x); // 2762
+
+  // Algunas propiedades incluidas en el objeto global Number
+  console.log( Number.MAX_VALUE );
+  console.log( Number.MIN_VALUE );
+  console.log( Number.POSITIVE_INFINITY );
+  console.log( Number.NEGATIVE_INFINITY );
+  console.log( Number.NaN );
+
+  // Algunos métodos comunes heredados de Number
+  console.log( x.toExponential() ); // notación exponencial
+  console.log( x.toFixed(2) ); // redondea a la cantidad dada de decimales
+  console.log( x.toPrecision(2) ); // redondea a N dígitos significativos
+
+  // Algunas propiedades incluidas en el objeto global Math
+  console.log( Math.E ); // número de Euler
+  console.log( Math.PI ); // número PI
+  console.log( Math.SQRT2 ); // raíz cuadrada de 2
+
+  // Algunos métodos incluidos en el objeto global Math
+  console.log( Math.abs( -3 ) ); // valor absoluto
+
+  /* Las funciones trigonométricas asumen el valor de su argumento en
+     radianes. Existen sin, cos, tan, asin, acos, atan */
+  console.log( Math.sin( 0.5 ) ); // seno
+  console.log( Math.cos( 0.5 ) ); // coseno
+
+  console.log( Math.ceil( 6.2 ) ); // entero superior más próximo
+  console.log( Math.floor( 2.8 ) ); // entero inferior más próximo
+
+  console.log( Math.min( 4, 5, Math.PI ) ); // mínimo
+  console.log( Math.max( 4, 5, Math.PI ) ); // máximo
+
+  console.log( Math.random() ); // número seudoaleatorio entre 0 y 1
+  // Para generar enteros seudoaleatorios en un rango dado:
+  function aleatorio(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+  console.log( aleatorio(1,10) );
+  /* NOTA: Math.random no es criptográficamente seguro */
+
+  console.log( Math.pow( 2, 3 ) );   // potencia(base, exponente)
+  console.log( Math.exp( 1 ) );      // exponencial (con base "e")
+  console.log( Math.log( Math.E ) ); // logaritmo natural (base "e")
+  console.log( Math.sqrt( 9 ) );   // raíz cuadrada
+
+  console.log( Math.log( Math.E ) ); // logaritmo natural (base "e")
+  console.log( Math.log( Math.E ) ); // logaritmo natural (base "e")
+
+  // Redondeo (al entero más cercano)
+  console.log( Math.round( 2.5 ) );  // 3
+  console.log( Math.round( 2.49 ) ); // 2
+  console.log( Math.round( -2.8 ) ); // -3
+  console.log( Math.round( -2.3 ) ); // -2
+  console.log( Math.round(1.005*100)/100 ); // nótese el error de redondeo
+
+  /* Para dar formato (para visualización como cadenas), según una configuración
+     regional (idioma) podemos utilizar Intl.NumberFormat */
+  var formato = new Intl.NumberFormat('es-ES');
+  console.log( formato.format( -32129.445 ) );
+  // Podemos especificar algunas opciones (ver referencias para más información)
+  var opciones = { style: 'currency', currency: 'EUR', maximumFractionDigits: 2 };
+  formato = new Intl.NumberFormat('es-ES', opciones );
+  console.log( formato.format( -32129.445 ) );
+
+  var formato_porcentaje = new Intl.NumberFormat( 'es-ES',
+                               { style: 'percent', maximumFractionDigits: 2 } );
+  console.log( formato_porcentaje.format( .58335 ) );
+
+  </script>
+</body>
+</html>

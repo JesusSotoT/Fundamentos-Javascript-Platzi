@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Introducción a Javascript</title>
+<meta charset="UTF-8">
+<script>
+function saludo( nombre ) {
+  var cadena = "¡Hola, " + nombre + "!";
+  alert( cadena );
+  document.getElementById('encabezado').innerHTML = cadena;
+}
+</script>
+</head>
+<body onload="saludo('mundo');">
+  <h1 id="encabezado">Encabezado original</h1>
+</body>
+</html>

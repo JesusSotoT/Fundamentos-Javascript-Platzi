@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Objetos en JS: Prototipo y Herencia</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <h1>Objetos en JS: Prototipo y Herencia</h1>
+  <script>
+    /* La "herencia" en JS se basa en el uso de "prototipos". No sólo
+       podemos agregar propiedades/métodos en el constructor de un
+       objeto, sino también dinámicamente utilizando su prototipo,
+       al que accedemos con la propiedad "prototype" */
+
+    // Constructor
+    var Persona = function( nombre ) {
+      this.nombre = nombre;
+    };
+
+    // Agregamos métodos al prototipo de Persona
+    Persona.prototype.caminar = function(){
+      console.log("¡Voy caminando!");
+    };
+
+    Persona.prototype.saludar = function() {
+      console.log("Hola, me llamo " + this.nombre);
+    };
+
+    /* Definiremos un objeto "Estudiante" que heredará las
+       propiedades y métodos de "Persona". Primero, el constructor: */
+    function Estudiante(nombre, carrera) {
+      /* Invocar al constructor 'padre', asegurándonos de pasar
+         correctamente el valor "this" */
+      Persona.call(this, nombre);
+
+      // Inicializar propiedades específicas
+      this.carrera = carrera;
+    };
+
+    /* Aquí formalizamos la "herencia": El prototipo de Estudiante es
+       un objeto que "hereda" el prototipo de Persona */
+    Estudiante.prototype = Object.create(Persona.prototype);
+
+    /* Configurar el constructor apropiado (no queremos usar
+       directamente el constructor de 'Persona') */
+    Estudiante.prototype.constructor = Estudiante;
+
+    // Personalizar el método "saludar"
+    Estudiante.prototype.saludar = function() {
+      /* Podemos invocar a métodos del 'padre'. Aquí llamamos al
+         método "saludar" (pasando el resto de argumentos, si hay)
+         y luego agregamos funcionalidad específica */
+      Persona.prototype.saludar.apply(this, arguments);
+      console.log("Estoy estudiando " + this.carrera + ".");
+    };
+
+    // Agregar un método propio
+    Estudiante.prototype.estudiar = function(){
+      console.log("No puedo hablar, ¡hay finales mañana!");
+    };
+
+    var estudiante1 = new Estudiante("Marta", "Filosofía");
+    estudiante1.saludar();
+    estudiante1.caminar();
+    estudiante1.estudiar();
+
+    // Verificamos que 'instanceof' funciona correctamente
+    console.log(estudiante1 instanceof Persona);  // true
+    console.log(estudiante1 instanceof Estudiante); // true
+
+    /* Podemos también definir métodos tipo 'get' y 'set' explícitamente
+       para propiedades de los objetos */
+    /* Definimos una propiedad llamada "fecha_nacimiento", que internamente
+       almacenaremos en una variable "privada" llamada _fecha en el
+       prototipo del objeto */
+    Object.defineProperty( Persona.prototype, 'fecha_nacimiento', {
+      get: function(){
+             if ( this._fecha ) {
+               return this._fecha.toLocaleString('es-ES');
+             }
+             else {
+               return undefined;
+             }
+           },
+      set: function( valor ) {
+             if ( typeof valor === 'string' || typeof valor === 'number' ) {
+              this._fecha = new Date( valor );
+             }
+             else if ( typeof valor === 'object' && valor instanceof Date ) {
+              this._fecha = valor;
+             }
+             else {
+              this._fecha = undefined;
+             }
+           }
+    });
+    var estudiante2 = new Estudiante("Viviana", "Derecho");
+    console.log( estudiante2.fecha_nacimiento );
+    estudiante2.fecha_nacimiento = '1990-04-02T13:50:00';
+    console.log( estudiante2.fecha_nacimiento );
+
+    estudiante2.fecha_nacimiento = new Date( '1991-04-02T13:50:00' );
+    console.log( estudiante2.fecha_nacimiento );
+
+    /* Nótese que podemos acceder a la variable "privada". Nombrarla
+       comenzando con un "guión bajo" es una convención */
+    console.log( estudiante2._fecha );
+
+    /* Al definir la nueva propiedad en el prototipo, podemos utilizarla
+       incluso en los objetos creados anteriormente. La capacidad de
+       extender los prototipos dinámicamente (en lugar de "clases estáticas")
+       es una de las características más poderosas de JS, y que ha facilitado
+       la implementación de "complementos", "plugins" y librerías */
+    console.log( estudiante1.fecha_nacimiento );
+    estudiante1.fecha_nacimiento = '1980-01-01T08:32:00';
+    console.log( estudiante1.fecha_nacimiento );
+  </script>
+</body>
+</html>

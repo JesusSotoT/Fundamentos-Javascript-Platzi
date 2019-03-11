@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>JS: Funciones</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <h1>JS: Funciones</h1>
+  <script>
+  /* La definición de funciones siempre requiere la palabra clave "function".
+     Podemos darle nombre a funciones, y/o asignarlas a variables */
+  function cuadrado( numero ) {
+    return numero * numero;
+  }
+  var x = 7;
+  console.log( 'El cuadrado de '+ x +' es ' + cuadrado(x) );
+
+  /* Los argumentos pasan en modalidad 'por valor', esto es, cualquier
+     modificación que realice la función sobre el valor de sus parámetros
+     no tendrá efecto fuera de la función. Sólo si el parámetro es un
+     objeto, se pueden modificar sus atributos en una función (sobre esto,
+     más detalles posteriormente) */
+  function modifica( numero ) {
+    numero = 5 * numero;
+    return numero;
+  }
+  console.log( 'modifica: ' + modifica(x) ); // 7*5=35
+  console.log( 'x: ' + x ); // x sigue valiendo 7
+
+  /* Aquí tenemos una definición (recursiva) de una función para calcular
+     el factorial de un número. Nótese que la función tiene un nombre "fac"
+     que usa para invocarse de manera recursiva, y también la hemos almacenado
+     en una variable llamada "factorial". Una función puede ser pasada como
+     parámetro a otra, o ser un "valor de retorno". Ésta es una de las
+     características más poderosas de JS (el uso de "closures") */
+  var factorial = function fac(n) { return n<2 ? 1 : n*fac(n-1) };
+
+  console.log( 'El factorial de ' + x + ' es: ' + factorial(x) );
+
+  // Estas variables tienen alcance global
+  var num1 = 15,
+      num2 = 5,
+      nombre = "Bart";
+
+  /* Esta función está definida en el ámbito global. Por tanto, tiene acceso
+     a las variables globales */
+  function multiplicar() {
+    return num1 * num2;
+  }
+
+  console.log( multiplicar() ); //75
+
+  // Una función anidada (definida dentro de otra)
+  function puntuacion() {
+    var num1 = 2, // éstas son variables de alcance local
+        num2 = 3;
+
+    function sumar() {
+      /* Esta función no está definida en el ámbito global, sino en el de
+         la función "puntuacion" */
+      return nombre + " alcanzó " + (num1 + num2) + " puntos";
+    }
+
+    return sumar();
+  }
+
+  console.log( puntuacion() );
+  console.log( multiplicar() ); //75 = 15*5
+
+  /* Ejemplo de funciones como valor de retorno */
+  var construir_potencia = function (exponente) {
+    var potencia = function (base) { //función anónima
+      return Math.pow(base, exponente);
+    };
+    return potencia;
+  }
+
+  /* Ahora podemos usar "construir_potencia" (una función anónima) para
+     generar funciones dinámicamente */
+  var a_la_dos = construir_potencia( 2 ); // el nombre "cuadrado" ya está usado
+  var cubo = construir_potencia( 3 );
+  var cuarta = construir_potencia( 4 );
+  console.log( "El cuadrado de "+ x +" es " + a_la_dos(x) );
+  console.log( "El cubo de "+ x +" es " + cubo(x) );
+  console.log( "La cuarta potencia de "+ x +" es " + cuarta(x) );
+
+  /* A veces, necesitamos aceptar un número variable de argumentos.
+     Supongamos que construimos una función para concatenar todos
+     los argumentos dados con un separador (al estilo de join en Perl) */
+  /* Sólo el separador es obligatorio. Accederemos al resto de argumentos
+     a través de la variable especial "arguments" */
+  function concatenar( separador ) {
+    var resultado = "",
+        i;
+
+    for (i = 1; i < arguments.length - 1; i++) {
+        resultado += arguments[i] + separador;
+    }
+    resultado += arguments[arguments.length - 1];
+    return resultado;
+  }
+  var suma = concatenar( '+', 1,2,3 ); // suma tiene la cadena 1+2+3
+
+  /* JS es un lenguaje interpretado y dinámico. Significa que podemos
+     construir las propias sentencias a ejecutar como cadenas de texto
+     y ejecutarlas.  Para ello, usamos "eval" */
+  console.log( suma + ' es ' + eval( suma ) );
+
+  var operacion = concatenar('/', 0, 0); // cadena de texto: 0/0
+  if ( isNaN( eval( operacion ) ) ) {
+    console.log( operacion + ' no da como resultado un número válido' );
+  }
+
+  console.log( 'El resultado de "x+5" es ' + x + 5 ); //Incorrecto
+
+  console.log( 'El resultado de "x+5" es ' + (x + 5) ); //12
+
+  /* Podemos forzar a interpretar una cadena como número entero o de
+     punto flotante con parseInt y parseFloat */
+  console.log( parseInt( 'este es el número 23' ) ); // NaN
+  console.log( parseInt( '2 veces 4 hacen 8' ) ); // 2
+  console.log( parseInt( 'CADA', 16 ) ); // hexadecimal
+  console.log( parseFloat( '3,1416' ) ); // 3: Para números flotantes se utiliza punto
+  console.log( parseFloat( '3.1416 es una aproximación de PI' ) );
+
+  </script>
+</body>
+</html>

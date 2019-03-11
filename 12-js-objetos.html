@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>JS: Objetos</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <h1>JS: Objetos</h1>
+  <script>
+    // Podemos crear un objeto utilizando el operador "new"
+    var album = new Object();
+
+    // Podemos asignar directamente valores a propiedades
+    album.titulo = "Revolver";
+    album.artista = "The Beatles";
+    album.año = 1966;
+    console.log( album );
+
+    /* También podemos acceder a propiedades utilizando sus
+       nombres como si fuesen índices de un arreglo */
+    album["sello"] = "EMI";
+    console.log( album["titulo"] );
+    var propiedad = "artista";
+    console.log( album[ propiedad ] );
+
+    /* Podemos iterar sobre las propiedades de un objeto, si
+       nuestro navegador ha implementado al menos el estándar
+       ECMAScript 5 (ver tabla en referencias) */
+    function mostrar_propiedades( objeto ){
+      var resultado = "";
+      for (var propiedad in objeto) {
+        if ( objeto.hasOwnProperty(propiedad) ) {
+            resultado += propiedad + " = " + objeto[propiedad] + "\n";
+        }
+      }
+      return resultado;
+    }
+
+    console.log( mostrar_propiedades( album ) );
+
+    // También podemos crear un objeto "inicializando" propiedades
+    var album2 = {
+      titulo: 'Dark side of the moon',
+      artista: 'Pink Floyd'
+    };
+    console.log( album2 );
+    /* Nótese que cada propiedad puede almacenar cualquier tipo de datos
+       (números, cadenas, arreglos, funciones, otros objetos) */
+    album2 = {
+      titulo: 'Dark side of the moon',
+      artista: {
+        nombre: 'Pink Floyd',
+        año_formacion: 1965
+      },
+      año: 1973,
+      singles: [ { lado_a:'Money', lado_b: 'Any colour you like' }, 
+                 { lado_a: 'Time', lado_b: 'Us and them'} ]
+    };
+    console.log( album2 );
+
+    /* Podemos especificar una función "constructor", usualmente
+       cuando queremos aplicar algunas reglas, validaciones, valores
+       predeterminados, etc */
+    function Artista( nombre, año_formacion ) {
+      if ( typeof nombre === 'string' ) {
+        this.nombre = nombre;
+      }
+      if ( typeof año_formacion === 'number' ) {
+        this.año_formacion = año_formacion;
+      }
+    }
+
+    function Album( titulo, artista, año ) {
+      if ( typeof titulo == 'string' ) {
+        this.titulo = titulo;
+      }
+
+      if ( typeof artista === 'Artista' ) {
+        this.artista = artista;
+      }
+      else if ( typeof artista === 'string' ) {
+        this.artista = new Artista( artista );
+      }
+
+      if ( typeof año === 'number' ) {
+        this.año = año;
+      }
+      if ( año === undefined ) {
+        this.año = (new Date()).getFullYear();
+      }
+    }
+
+    var abbey = new Album( 'Abbey Road', 'The Beatles', 1969 );
+    var blur = new Album( 'The Magic Whip', 'Blur' );
+    console.log( blur );
+
+    /* También podemos crear un objeto a partir de la definición
+       de otro, sin definir necesariamente un constructor */
+    var Animal = {
+      tipo: 'Invertebrados'
+    };
+    var pulpo = Object.create( Animal );
+    console.log( pulpo );
+    var sapo = Object.create( Animal );
+    sapo.tipo = 'Anfibios';
+    console.log( sapo );
+
+  </script>
+</body>
+</html>

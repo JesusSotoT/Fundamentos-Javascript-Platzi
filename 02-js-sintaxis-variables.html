@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>JS: Sintaxis básica y variables</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <h1>JS: Sintaxis básica y variables</h1>
+
+  <script>
+  /* Este es un comentario */
+  /* Los comentarios pueden abarcar
+     múltiples líneas, pero en general no pueden anidarse. */
+  // También podemos colocar comentarios rápidos de una línea
+
+  /* Declaramos una variable con "var". Podemos asignar un valor
+     a la variable en su declaración o posteriormente */
+  var x = 5;
+  console.log( "El valor de 'x' es " + x );
+
+  /* Una variable a la que no se le haya asignado un valor, tendrá
+     el valor predeterminado de undefined. Podemos verificar si
+     una variable tiene un valor o no: */
+  if ( x === undefined ) {
+    console.log( "'x' no tiene un valor definido" );
+  }
+
+  /* Nótese que en JS, al declarar una variable fuera de una función,
+     ésta tiene lo que podemos llamar 'alcance global' en el documento.
+     Y podemos hacer referencia a ellas aunque estén definidas más
+     tarde en el documento (aunque esto puede generar un mensaje de
+     advertencia) */
+  if ( y === undefined ) {
+    console.log( "'y' no tiene un valor definido" );
+  }
+  console.log( "1 - El valor de 'y' es " + y );
+
+  var y;
+  y = 10;
+  console.log( "2 - El valor de 'y' es " + y );
+
+  /* En JS, hasta ahora, no tenemos variables "locales" a un bloque.
+     Por tanto, el siguiente fragmento, donde se "declara" y asigna
+     un valor a una variable existente, realmente está modificando
+     su valor (global) */
+  if ( true ) {
+    var y = 8; // en este punto, es equivalente a y = 8;
+    console.log( "El valor 'y' dentro del bloque es " + y );
+  }
+  console.log( "El valor de 'y' fuera del bloque es " + y );
+
+  /* Las variables "globales" son en realidad propiedades de un
+     objeto global, que para una página web, es el objeto "window".
+     Esto permite hacer referencia a dichas variables también 
+     a través de ventanas relacionadas, como frames, iframes o
+     ventanas emergentes. Pulse el botón de "Abrir ventana emergente"
+     para verlo en acción: */
+  console.log( "El valor de 'window.y' es " + window.y );
+
+  /* Ejemplo sencillo de función, posteriormente las trataremos en detalle */
+  function ejemplo() {
+    /* Nótese que las funciones declaradas dentro de una función
+       sí tienen alcance local */
+    var y = 'Valor interno';
+    console.log( "'y' en la función es " + y );
+    console.log( "El valor global de 'y' sigue siendo " + window.y );
+  }
+
+  // invocamos a la función
+  ejemplo();
+
+  console.log( "El valor global de 'y' sigue siendo " + y );
+
+  const pi = 3.14159265359;
+  console.log( "'pi' vale " + pi );
+  // lo siguiente ocasionaría un error de sintaxis:
+  // pi = 3.14;
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>JS: Fechas</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <h1>JS: Fechas</h1>
+  <script>
+    // De manera predeterminada, un objeto Date se crea con la fecha actual
+    var ahora = new Date();
+    console.log( ahora );
+    // Podemos especificar una fecha:
+    var fecha = new Date( "December 31, 2020" );
+    console.log( fecha );
+    // Fecha y hora
+    fecha = new Date( "December 31, 2020 11:59:59 pm" );
+    console.log( fecha );
+    // año, mes y día ( mes comienza en 0 )
+    fecha = new Date( 2020, 11, 31 );
+    console.log( fecha );
+    // año, mes, día, horas, minutos, segundos ( mes comienza en 0 )
+    fecha = new Date( 2020, 11, 31, 23, 59, 59 );
+    console.log( fecha );
+    // Formato ISO
+    fecha = new Date( "2020-12-31T23:59:59" );
+    console.log( fecha );
+    // Con Unix epoch
+    var unix = new Date( 0 );
+    console.log( unix );
+
+    // También podemos especificar una zona horaria:
+    var jfk = new Date( "November 22, 1963 12:30:00 CST" );
+    console.log( jfk );
+    var beds = new Date( "1964-02-09T20:12:00-05:00" );
+    console.log( beds );
+
+    // varios métodos "get"
+    console.log( ahora.getFullYear() );
+    console.log( ahora.getMonth() ); // comienza en 0
+    console.log( ahora.getDate() ); // día del mes
+    console.log( ahora.getDay() ); // día de la semana: 0 = Domingo, 1 = Lunes
+    console.log( ahora.getHours() );
+    console.log( ahora.getMinutes() );
+    console.log( ahora.getSeconds() );
+    console.log( ahora.getMilliseconds() );
+
+    // Los métodos anteriores tienen equivalentes en UTC con getUTC*
+    console.log( ahora.getUTCDate() );
+    console.log( ahora.getUTCHours() );
+    console.log( ahora.getUTCMinutes() ); // y así sucesivamente
+
+    console.log( ahora.getTime() ); // representación numérica portable (epoch)
+
+    /* Todos los métodos anteriores para obtener información ("get*")
+       tienen también un método correspondiente para modificarla (set*) */
+    unix.setFullYear(2020);
+    unix.setMonth(11);
+    unix.setDate(31);
+    console.log( unix );
+
+    // Si queremos crear una copia de un objeto Date:
+    var copia = new Date( beds.getTime() );
+    console.log( copia );
+
+    /* También tenemos métodos para obtener representaciones de la fecha dada
+       en otros formatos */
+    console.log( fecha.toString() ); // en inglés
+    console.log( fecha.toUTCString() ); // en inglés
+    console.log( fecha.toISOString() ); // de manera predeterminada, en UTC
+
+    console.log( fecha.toDateString() ); // en inglés
+    console.log( fecha.toTimeString() ); // en inglés
+
+    /* Algunos navegadores soportan la representación de fecha en una
+       configuración regional. Ver lista de compatibilidad en las referencias */
+    console.log(fecha.toLocaleString('en-US'));
+    console.log(fecha.toLocaleString('en-GB'));
+    console.log(fecha.toLocaleString('es-ES'));
+
+    console.log(fecha.toLocaleDateString('en-US'));
+    console.log(fecha.toLocaleDateString('es-ES'));
+
+    console.log(fecha.toLocaleTimeString('en-US'));
+    console.log(fecha.toLocaleTimeString('es-ES'));
+
+    // Podemos especificar opciones de formato regional:
+    var opciones = { weekday: 'long', year: 'numeric', month: 'long', 
+                     day: 'numeric', hour12: true };
+    console.log( fecha.toLocaleTimeString('es-ES', opciones) );
+
+    /* NOTA: Si necesitamos dar formato regional a un gran número de fechas,
+       por cuestiones de rendimiento, podemos utilizar un objeto separado
+       para el formato, con Intl.DateTimeFormat: */
+    var formato = new Intl.DateTimeFormat('es-ES', opciones);
+    console.log( formato.format( fecha ) );
+    console.log( formato.format( ahora ) );
+    console.log( formato.format( jfk ) );
+    console.log( formato.format( beds ) );
+
+  </script>
+</body>
+</html>

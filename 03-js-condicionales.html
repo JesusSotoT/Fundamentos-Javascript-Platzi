@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>JS: Condicionales</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <h1>JS: Condicionales</h1>
+
+  <script>
+  /* La forma sencilla de if */
+  var x = 8;
+  if ( x ) {
+    console.log( "'x' vale: " + x );
+  }
+
+  if ( x > 10 ) {
+    x = x - 10; // podría abreviarse x -= 10;
+  }
+  else {
+    console.log( "'x' no es mayor a 10" );
+  }
+
+  /* Podemos estructurar condicionales anidados */
+  var y = prompt( 'Introduzca un valor entero' );
+  if ( y === undefined ) {
+    console.log( "No se proporcionó un valor" );
+  }
+  else if ( y > 0 ) {
+    console.log( "Valor positivo: " + y );
+  }
+  else if ( x < 0 ) {
+    console.log( "Valor negativo: " + y );
+  }
+  else if ( y == '' ) {
+    console.log( "Cadena vacía" );
+  }
+  else {
+    console.log( "Ninguna de las anteriores: " + y );
+  }
+
+  /* Para estos casos también podemos usar "switch". Es más útil
+     cuando queremos comparar una variable o expresión con un
+     conjunto discreto de valores */
+  var dia_semana = new Date().getDay(); // el día actual de la semana, 0 a 6
+  switch ( dia_semana ) {
+    case 6:
+      console.log("Hoy es sábado");
+      break;
+    case 0:
+      console.log("Hoy es domingo");
+      break;
+    default:
+      console.log("Esperando el fin de semana");
+  }
+
+  /* Forma condicional abreviada */
+  var zzz = ( dia_semana == 0 ) ? 'A dormir...' : 'A levantarse...';
+  console.log( zzz );
+  </script>
+
+</body>
+</html>

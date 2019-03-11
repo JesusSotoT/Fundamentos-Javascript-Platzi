@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>JS: Cadenas</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <h1>JS: Cadenas</h1>
+  <script>
+    /* Las cadenas en JS pueden verse como colecciones o arreglos de
+      elementos (caracteres) que comienzan en la posición 0, pero
+      también como objetos "String". Podemos indicar un valor de
+      cadena utilizando un literal: */
+    var x = 'Una cadena';
+    var y = "Otra cadena";
+    /* Nótese que aunque una cadena puede contener saltos de línea,
+      no podemos separar el delimitador de inicio y fin en varias */
+    /* Esto ocasionaría un error de sintaxis: */
+    /* x = "Una cadena
+        dividida en varias líneas"; */
+    x = 'Podemos indicar \n saltos de línea \n con secuencias de ' +
+        'escape y utilizar la \n concatenación para definir '+
+        'cadenas \n largas de una manera legible.';
+    console.log( x );
+
+    /* Podemos utilizar indistintamente comillas dobles o simples
+       como delimitadores de cadena. Comúnmente usaremos dobles si
+       nuestra cadena contendrá comillas simples, y viceversa, pero
+       también podemos utilizar secuencias de escape de ser
+       necesario */
+    x = "Esta es la taberna de O'Hara";
+    y = 'Entonces ella dijo: "Adiós" por última vez...';
+    var z = 'El viejo O\'Malley decía siempre: "Ea!"';
+    console.log( x );
+    console.log( y );
+    console.log( z );
+
+    /* Podemos especificar secuencias de escape en código hexadecimal
+       o secuencias Unicode */
+    x = '\xA9 2015, Network Faculty';
+    console.log( x );
+    x = '\u00A9 2015, Network Faculty - Precio: 20 \u20AC';
+    console.log( x );
+
+    // Declarar explícitamente un objeto String (pocas veces necesario)
+    y = new String( 'Cadena de texto' );
+    console.log( y );
+    console.log( typeof y );
+
+    /* Si usamos una propiedad o método de String en una variable
+       de cadena "primitiva" o literal, JS crea el objeto String
+       temporalmente, y lo descarta automáticamente */
+    y = 'Cadena definida con un literal';
+    console.log( "'y' es un: " + typeof y + ' de longitud ' + y.length );
+    console.log( "Tres tristes tigres...".length );
+
+    /* De hecho, "length" es una propiedad de String.  Veamos algunos
+       de los métodos más comunes de String */
+    console.log( y.charAt(0) ); // primer carácter
+    console.log( y.charCodeAt(0) ); // código decimal del primer carácter
+
+    /* Obtener la posición de una subcadena de texto */
+    var cadena = "Tres tristes tigres";
+    console.log( cadena );
+    var r1 = cadena.indexOf('r'); // primera aparición
+    console.log( 'Posición: ' + r1 + ' Letra: ' + cadena.charAt(r1) );
+    var r2 = cadena.indexOf('r', r1 + 1 ); // segunda aparición
+    console.log( 'Posición: ' + r2 + ' Letra: ' + cadena.charAt(r2) );
+    var r = cadena.lastIndexOf('r'); // última aparición
+    console.log( 'Posición: ' + r + ' Letra: ' + cadena.charAt(r) );
+
+    // Devuelve -1 si no encuentra la subcadena
+    if ( cadena.indexOf( "tres" ) === -1 ) { // Nótese la comparación
+      console.log( 'subcadena no encontrada' );
+    }
+
+    /* Ejemplo: contar las ocurrencias de una letra en una cadena */
+    var letra = 'r';
+    var total = 0;
+    var pos = -1;
+    do {
+      pos = cadena.indexOf( letra, pos + 1 );
+      if ( pos >= 0 ) {
+        total++;
+      }
+    } while ( pos !== -1 );
+    console.log( 'La letra ' + letra + ' aparece ' + total + ' veces' );
+
+    // Concatenar
+    console.log( cadena.concat(' comen trigo en el trigal') );
+    console.log( cadena ); // la cadena original no se altera
+
+    // Separar una cadena según un separador
+    var palabras = cadena.split( ' ' );
+    console.log( palabras );
+    var caracteres = cadena.split( '' );
+    console.log( caracteres );
+
+    // Extraer subcadenas
+    console.log( cadena.slice(0,4) ); // pos. inicio, pos. final (no incluyente)
+    console.log( cadena.slice(5) ); // pos. inicio, hasta el final
+    console.log( cadena.slice(-6) ); // inicia en la pos. 6 de der. a izq.
+    console.log( cadena.substr(5, 7) ); // pos. inicio, longitud deseada
+    console.log( cadena.substring(0, 4) ); // pos. inicio, pos. final (no inc.)
+    console.log( cadena.substring(4, 0) ); // si fin > inicio, se invierten los arg.
+
+    // Convertir a mayúsculas / minúsculas
+    console.log( cadena.toLowerCase() );
+    console.log( cadena.toUpperCase() );
+    console.log( cadena ); // la cadena original no se altera
+
+    // repetir una cadena N veces
+    console.log( '=-='.repeat(10) );
+
+    // Limpiar espacios al prinicipio y final
+    console.log( ' Esto puede tener espacios...    '.trim() );
+
+    /***** Expresiones regulares *****/
+    /* search: busca si hay correspondencia del patrón en la cadena
+       match: extrae las correspondencias
+       replace: reemplaza las correspondencias de un patrón con otra cadena
+    */
+
+    // buscamos si hay palabras que comienzan en 'tr' (sin distinción may/min)
+    console.log( cadena.search( /\btr/i ) ); // sí hay, en la posición 0
+
+    // extraemos todas las palabras que comienzan en 'tr' (sin dist. may/min)
+    console.log( cadena.match( /\b(tr\w*)\b/ig ) );
+
+    // Reemplazamos las palabras que comienzan en 'tr'
+    console.log( cadena.replace( /\b(tr\w*)\b/ig, 'más' ) );
+
+    // Podemos usar el texto encontrado en la expresión de reemplazo
+    console.log( "Bart Simpson".replace( /(\w+)\s(\w+)/, '$2, $1' ) );
+
+    // Buscar dos letras iguales juntas
+    console.log( "Llegaron a bellos campos arrasados".match( /(\w)\1/ig ) );
+
+    /* Ejemplo: validar un nombre de usuario: puede contener letras, números,
+       guiones y subrayados, entre 3 y 16 caracteres en total.  Aquí crearemos
+       la expresión regular por separado para aplicarla (test) a varias cadenas */
+    var re_validar_usuario = /^[a-z0-9_-]{3,16}$/i;
+    console.log( re_validar_usuario.test( 'jo' ) ); // no
+    console.log( re_validar_usuario.test( 'john' ) ); // sí
+    console.log( re_validar_usuario.test( 'john123' ) ); // sí
+    console.log( re_validar_usuario.test( '3l_h@ck34' ) ); // no
+
+  </script>
+</body>
+</html>

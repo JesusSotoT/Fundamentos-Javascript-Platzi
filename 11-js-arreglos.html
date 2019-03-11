@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>JS: Arreglos</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <h1>JS: Arreglos</h1>
+  <script>
+    /* Podemos definir arreglos encerrando elementos entre
+     corchetes [], separados por comas. Se recomienda no dejar
+     comas extra al final */
+    var simpsons = [ 'Bart', 'Lisa', 'Maggie' ];
+    var arreglo = []; // inicializar un arreglo vacío
+    // Acceder a elementos individuales mediante el índice
+    console.log( simpsons[0] ); // Bart
+    console.log( simpsons[5] ); // undefined
+    // si dejamos comas extra intermedias, se crean elementos vacíos
+    simpsons = [ 'Bart', , 'Lisa', 'Maggie' ];
+    console.log( simpsons );
+
+    /* Podemos asignar un valor a un elemento del arreglo en cualquier
+       posición. Por ejemplo, para agregar un elemento al final: */
+    // Agregar elemento al arreglo (al final)
+    simpsons[simpsons.length] = 'Homero';
+    console.log( simpsons );
+
+    /* Nótese que si asignamos valor a una posición arbitraria, todas
+       las posiciones anteriores que hayan estado vacías, ahora
+       existen con un valor undefined: */
+    arreglo[9] = 5;
+    console.log(arreglo);
+
+    // Longitud (cantidad de elementos) del arreglo
+    console.log( simpsons.length );
+    console.log( arreglo.length );
+
+    /* Iterar sobre todos los elementos. Nótese lo que sucede al
+      concatenar con un elemento undefined */
+    for ( var i = 0; i < simpsons.length; i++ ) {
+      console.log( simpsons[i] + ' Simpson' );
+    }
+
+    /*** Métodos de arreglos ***/
+    simpsons.push( 'Marge' ); // agregar elemento al final
+    console.log( simpsons );
+    var ultimo = simpsons.pop(); // eliminar último elemento
+    console.log( 'Eliminamos a ' + ultimo + ' de ' + simpsons );
+    var primero = simpsons.shift(); // eliminar primer elemento
+    console.log( 'Eliminamos a ' + primero + ' de ' + simpsons );
+    simpsons.unshift( 'Abraham' ); // agregar elemento al comienzo
+    console.log( simpsons );
+
+    var flanders = [ 'Ned', 'Maude', 'Rodd', 'Todd' ];
+    // concatenar arreglos
+    var personajes = simpsons.concat( flanders );
+    console.log( personajes );
+
+    // invertir orden
+    var en_reverso = personajes.reverse(); // no modifica el arreglo original
+    console.log( en_reverso ); 
+
+    // extraer un subconjunto de elementos de un arreglo
+    var algunos = en_reverso.slice( 1, 5 );
+    console.log( algunos );
+
+    /* Eliminar elementos del arreglo, y sustituirlos por nuevos valores */
+    personajes.splice( 7, 1, 'Marge' ); // posición, cantidad, valores nuevos
+    console.log( personajes );
+
+    /* Convertir arreglo a cadena, uniendo los elementos con un separador */
+    console.log( personajes.join( ' - ' ) );
+
+    /* Ordenar elementos. De manera predeterminada, se interpretan los valores
+       como cadenas y se usa orden alfabético (más precisamente, se ordena
+       de acuerdo con los códigos Unicode). */
+    console.log( personajes.sort() );
+    console.log( [ 1, 2, 3, 4, 20 ].sort() );
+    /* Podemos personalizar la ordenación suministrando una función a sort.
+       Al comparar dos elementos, digamos a y b, la función debe retornar
+       un número negativo si a es menor que b, 0 si son iguales, o un
+       número positivo si a es mayor que b. */
+    var orden_numerico = function(a,b){
+      var na = parseFloat(a);
+      var nb = parseFloat(b);
+      if ( na < nb ) return -1;
+      if ( na == nb ) return 0;
+      if ( na > nb ) return 1;
+    }
+    var orden_longitud = function(a,b){
+      var na = a.length;
+      var nb = b.length;
+      if ( na < nb ) return -1;
+      if ( na == nb ) return 0;
+      if ( na > nb ) return 1;
+    }
+    console.log( [ 1, 2, 3, 4, 20 ].sort( orden_numerico ) );
+    console.log( personajes.sort( orden_longitud ) );
+
+    // verificar si todos los elementos del arreglo cumplen una condición
+    var solo_digitos = function( valor, indice, arreglo ) {
+      if ( typeof valor === 'number' || typeof valor === 'string' ) {
+        var cadena = valor.toString();
+        return ( cadena.search( /\D/ ) === -1 ) ? true : false;
+      }
+      return false;
+    };
+    console.log( [ 1, 2, 3, 4, 20 ].every( solo_digitos ) );
+    console.log( [ 1, 2, '3', 4, 20 ].every( solo_digitos ) );
+    console.log( [ 1, 2, 'pepe', 3, 4, 20 ].every( solo_digitos ) );
+
+    /* También podemos usar "filter" de manera similar a "every",
+       para retornar sólo los valores que cumplan cierta condición */
+    console.log( [ 1, 2, 'pepe', '3', 4, 20 ].filter( solo_digitos ) );
+
+    /* O también si sólo algunos ("some") en lugar de todos ("every")
+       los elementos cumplen la condición */
+    console.log( [ 'a', 'b', 'c', '2' ].some( solo_digitos ) );
+
+    /* "map" crea un nuevo arreglo aplicando una función a cada elemento
+       de otro arreglo existente */
+    var cuadrados = [ 1, 2, 3, 4, 5 ].map( function(n){ return n*n } );
+    console.log( cuadrados );
+
+    /* "reduce" aplica una función como un "acumulador" a cada elemento
+       del arreglo */
+    // Ejemplo: sumar todos los elementos de un arreglo
+    console.log( [ 10, 20, 30, 40 ].reduce( function(a,b) { return a+b;} ) );
+
+    /* Buscar un elemento en un arreglo */
+    console.log( [10, 20, 30, 40].indexOf( 20 ) ); // 1
+    console.log( [10, 20, 30, 40].indexOf( 10 ) ); // 0
+    console.log( [10, 20, 30, 40, 10].indexOf( 10, 1 ) ); // 4
+    console.log( [10, 20, 30, 40].indexOf( 50 ) ); // -1
+    console.log( [10, 20, 30, 40, 10].lastIndexOf( 10 ) ); // 4
+
+    /* Los arreglos pueden ser anidados, donde un elemento de un arreglo
+       puede a su vez ser otro arreglo, generando así arreglos multi-
+       dimensionales */
+    var matriz = [
+      [ 'f0c0', 'f0c1', 'f0c2' ],
+      [ 'f1c0', 'f1c1', 'f1c2' ]
+    ]; // matriz de dos filas y 3 columnas
+    console.log( matriz );
+    /* Nótese que no es obligatorio que todas las "dimensiones" tengan 
+       la misma cantidad de elementos */
+    var a = [
+      [ 'f0c0', 'f0c1', 'f0c2' ],
+      [ 'f1c0', 'f1c1', 'f1c2', 'f1c3' ],
+      [ 'f2c0', 'f2c1' ]
+    ];
+    console.log(a);
+    for ( var i = 0; i < a.length; i++ ) {
+      console.log('Fila '+ i + ':');
+      for ( var j = 0; j < a[i].length; j++ ) {
+        console.log('Columna '+ j + ':' + a[i][j] );
+      }
+    }
+
+  </script>
+</body>
+</html>

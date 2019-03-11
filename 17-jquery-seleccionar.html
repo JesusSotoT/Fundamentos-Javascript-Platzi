@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>JQuery: Seleccionar elementos</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+  <h1>JQuery: Seleccionar elementos</h1>
+
+  <h1>Encabezado 1 <small>con texto pequeño</small></h1>
+
+  <ul>
+    <li><a href="#1">Enlace 1</a></li>
+    <li><a href="#2">Enlace 2</a></li>
+    <li><a href="#3">Enlace 3</a></li>
+    <li><a href="#4">Enlace 4</a></li>
+  </ul>
+
+  <table class="tabla-con-borde">
+    <caption>Películas más taquilleras por año</caption>
+    <colgroup>
+      <col>
+      <col>
+      <col>
+      <col>
+      <col>
+      <col>
+    </colgroup>
+    <thead>
+      <tr>
+        <th scope="col" colspan="2">Año</th>
+        <th scope="col">Título</th>
+        <th scope="col">Género</th>
+        <th scope="col">Presupuesto</th>
+        <th scope="col">Recaudación</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td rowspan="3">2013-2015</td>
+        <td>2015</td>
+        <td>Furious 7</td>
+        <td>Acción</td>
+        <td class="derecha">$190,000,000</td>
+        <td class="derecha">$324,424,352</td>
+      </tr>
+      <tr>
+        <td>2014</td>
+        <td>American Sniper</td>
+        <td>Drama</td>
+        <td class="derecha">$58,000,000</td>
+        <td class="derecha">$348,417,536</td>
+      </tr>
+      <tr>
+        <td>2013</td>
+        <td>The Hunger Games: Catching Fire</td>
+        <td>Aventura</td>
+        <td class="derecha">$130,000,000</td>
+        <td class="derecha">$424,668,047</td>
+      </tr>
+      <tr>
+        <td rowspan="3">2010-2012</td>
+        <td>2012</td>
+        <td>The Avengers</td>
+        <td>Aventura</td>
+        <td class="derecha">$225,000,000</td>
+        <td class="derecha">$623,279,552</td>
+      </tr>
+      <tr>
+        <td>2011</td>
+        <td>Harry Potter and the Deathly Hallows: Part II</td>
+        <td>Aventura</td>
+        <td class="derecha">$125,000,000</td>
+        <td class="derecha">$381,011,232</td>
+      </tr>
+      <tr>
+        <td>2010</td>
+        <td>Toy Story 3</td>
+        <td>Aventura</td>
+        <td class="derecha">$200,000,000</td>
+        <td class="derecha">$415,004,880</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="4">Totales</td>
+        <td class="derecha">$928,000,000</td>
+        <td class="derecha">$2,516,805,599</td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <form id="form1" method="post">
+    <fieldset>
+      <legend>Datos básicos</legend>
+
+      <label for="usuario">Usuario</label>
+      <input name="usuario" id="usuario" type="text" required>
+
+      <label for="correo">Correo electrónico</label>
+      <input name="correo" id="correo" type="text">
+
+      <label for="clave">Contraseña</label>
+      <input name="clave" id="clave" type="password" required> 
+    </fieldset>
+
+    <fieldset>
+      <legend>Datos personales</legend>
+
+      <fieldset>
+        <legend>Género</legend>
+        <label>
+          <input name="genero" type="radio" value="M" checked>
+          Masculino
+        </label>
+        <label>
+          <input name="genero" type="radio" value="F">
+          Femenino
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Nivel de Educación</legend>
+        <label>
+          <input name="educacion" type="checkbox" value="1" checked>
+          Primaria
+        </label>
+        <label>
+          <input name="educacion" type="checkbox" value="2" checked>
+          Secundaria
+        </label>
+        <label>
+          <input name="educacion" type="checkbox" value="3">
+          Técnica
+        </label>
+        <label>
+          <input name="educacion" type="checkbox" value="4" checked>
+          Grado Universitario
+        </label>
+        <label>
+          <input name="educacion" type="checkbox" value="5">
+          Posgrado, Master, Doctorado
+        </label>
+      </fieldset>
+
+      <label for="campus">Campus seleccionado(s)</label>
+      <select name="campus" id="campus" multiple>
+        <option value="1" selected>Springfield</option>
+        <option value="3" selected>Piedradura</option>
+        <option value="2">Villa Chica</option>
+        <option value="4">Ciudad Gótica</option>
+        <option value="5">Yellowstone</option>
+        <option value="6">Río</option>
+        <option value="6">Los Ángeles</option>
+      </select>
+
+    </fieldset>
+
+    <button name="enviar" type="submit" id="btn-enviar">Enviar Formulario</button>
+    <button name="reiniciar" type="reset" id="btn-reset">Reinicializar Formulario</button>
+  </form>
+
+
+  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script>
+    // Selección por ID
+    console.log( $('#btn-enviar') );
+
+    // Selección por clase
+    console.log( $('.tabla-con-borde') );
+
+    // Selección por atributo
+    console.log( $("input[name='genero']") );
+
+    // Utilizar selector CSS
+    $("ul li").each( function() {
+      console.log( $(this).text() );
+    });
+
+    // Seudo-selectores
+    console.log( $("a:first") ); // primer enlace
+    console.log( $("tbody tr:odd") ); // filas impares
+    console.log( $("a:gt(1)") ); // todos los enlaces menos los dos primeros
+    console.log( $('#campus :not(:selected)') ); // campus no seleccionados
+
+    // Filtrar y refinar selección de elementos
+    console.log( $("a").first() ); // primer enlace
+    console.log( $("a").eq(3) ); // cuarto enlace
+    console.log( $(".tabla-con-borde td").filter('.derecha') ); //celdas con clase
+    console.log( $("input[name='educacion']").filter(':checked') ); //niveles seleccionados
+
+    /* Recorrer elementos de una selección */
+    $('input[name="educacion"]:checked').each( function(){
+      console.log( 'Educación: ' + $(this).val() );
+    });
+
+    /* Encadenar más métodos sobre selección */
+    $(".tabla-con-borde").find('.derecha').filter(':odd').css('color','red');
+
+    /* Sobre una selección, podemos refinar y luego volver a la selección original
+       con end() */
+    $('ul li')
+      .find('a')
+        .eq(0).text('Primer enlace').end() // volvemos a los "a"
+        .eq(2).text('Tercer enlace');
+
+    // Asociar eventos a los elementos seleccionados
+    $('button').click( function(e){
+      console.log( 'Clic sobre el botón ' + $(this).attr('id') );
+      e.preventDefault();
+    });
+  </script>
+</body>
+</html>

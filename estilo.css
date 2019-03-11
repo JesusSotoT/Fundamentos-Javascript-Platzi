@@ -1,0 +1,53 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#invitados {
+  margin-bottom: 20px;
+  border: 2px solid #395870;
+  box-shadow: 3px 6px 2px rgba(0, 0, 0, .3);
+  width: 50%;
+}
+
+.tabla-con-borde, .tabla-con-borde th, .tabla-con-borde tr, .tabla-con-borde td {
+  border-style: solid;
+  border-width: 1px;
+  padding: 2px;
+}
+.tabla-con-borde caption {
+  font-weight: bold;
+}
+
+.tabla-con-borde thead, .tabla-con-borde tfoot {
+  background-color: #ccc;
+}
+.tabla-con-borde tbody tr:hover {
+  background-color: lightblue!important; /* "important" para que esto tenga prioridad sobre otras reglas */
+}
+.tabla-con-borde tbody tr:nth-child(odd) {
+   background-color: #eee;
+}
+.derecha {
+  text-align: right;
+}
+
+/** Algo de estilo para el formulario  **/
+fieldset {
+  padding: 1em;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+legend {
+  padding: 0.2em 0.5em;
+  border:1px solid;
+  font-weight: bold;
+}
+label[for] {
+  margin-top: 0.5em;
+  font-weight:bold;
+  display: block;
+}
+label input[type="checkbox"], label input[type="radio"] {
+  display: inline;
+  font-weight: normal;
+}

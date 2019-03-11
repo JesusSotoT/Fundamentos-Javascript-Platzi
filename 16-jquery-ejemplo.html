@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Ejemplo con JQuery</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+  <h1>Invitados a la reunión:</h1>
+  <div id="invitados"></div>
+  <a href="#" id="link_agregar_invitado">Agregar Invitado</a>
+  <div id="nuevo_invitado" style="display: none;">
+    <form id="frm_nuevo_invitado">
+      <fieldset>
+        <legend>Datos del Nuevo Invitado</legend>
+        <label for="nombre">Nombre:</label>
+        <input type="text" name="nombre" id="nombre">
+        <label for="apellido">Apellido:</label>
+        <input type="text" name="apellido" id="apellido">
+        <label for="telefono">Teléfono (7 dígitos):</label>
+        <input type="tel" name="telefono" id="telefono"> <span id="ayuda_telefono"></span>
+      </fieldset>
+      <input type="button" value="Agregar" id="btn_agregar_invitado">
+      <input type="reset" value="Cancelar" id="btn_cancelar">
+    </form>
+  </div>
+  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="ejemplo-jquery.js"></script>
+</body>
+</html>

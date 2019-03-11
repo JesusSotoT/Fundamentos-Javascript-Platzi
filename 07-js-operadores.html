@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>JS: Operadores y expresiones</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <h1>JS: Operadores y expresiones</h1>
+  <script>
+    /***** Operadores de Asignación *****/
+    var x = 5; // asignación simple
+    x += 10; // incremento x = x + 10
+    x -= 2; // decremento x = x - 2
+    console.log( x );
+    /* Podemos hacer lo mismo con la multiplicación *, división /,
+       resto %, y operadores de bit */
+
+    /***** Operadores de Comparación *****/
+    // ( todos los ejemplos siguientes dan un valor cierto )
+    console.log( x == 13 ); // igual a (por valor)
+    console.log( x != 10 ); // distinto a (por valor)
+    console.log( x === 13 ); // estrictamente igual a (valor y tipo)
+    console.log( x !== "13" ); // estrictamente distinto a (valor y tipo)
+    console.log( x > 10 ); // mayor que
+    console.log( x < 20 ); // menor que
+    console.log( x >= 13 ); // mayor o igual que
+    console.log( x <= 42 ); // menor o igual que
+
+    /***** Operadores Aritméticos *****/
+    /* Además de "+", "-", "*", y "/", tenemos: */
+    console.log( x % 3 ); // resto de división: 1
+    console.log( ++x ); // incremento previo: 14
+    console.log( x++ ); // incremento posterior: 14 (x después vale 15)
+    console.log( x );
+    console.log( --x ); // decremento previo: 14
+    console.log( x-- ); // incremento posterior: 14 (x después vale 13)
+    console.log( x );
+    console.log( -x ); // cambio de signo, no afecta el valor original
+    console.log( +"3" ); // forzar interpretación numérica
+
+    /***** Operadores de Bit *****/
+    /* Estos operadores tratan sus operandos como conjuntos de 32 bits,
+       realizando las operaciones en representación binaria y retornando
+       valores numéricos normales de JS */
+    console.log( 15 & 9 ); // AND en bit: 1111 & 1001 = 1001 = 9
+    console.log( 15 | 9 ); // OR  en bit: 1111 | 1001 = 1111 = 15
+    console.log( 15 ^ 9 ); // XOR en bit: 1111 | 1001 = 0110 = 6
+    console.log( ~15 );    // NOT en bit: -16
+    console.log( 9 << 2 ); // desp. izq: 100100 = 36
+    console.log( 9 >> 2 ); // desp. der: 10 = 2
+
+    /***** Operadores Lógicos *****/
+    /* Los operadores lógicos trabajan en modo de evaluación de "corto
+       circuito": cuando evaluando el primer operando, ya se puede determinar
+       el resultado de la expresión, no se evalúan los demás */
+    console.log( true && true ); // AND
+    console.log( true || false ); // OR
+    console.log( ! true ); // NOT
+    console.log( false && 0/0 ); // no ocasiona NaN, el 2o término no se evalúa
+
+    /***** Operadores Unarios *****/
+    /* Operador delete, elimina un objeto, propiedad o elemento de arreglo.
+       En el caso de variables, se pueden eliminar las variables definidas
+       implícitamente (sin "var"). Las definidas con "var" no pueden ser
+       eliminadas con "delete" (pero se podría asignar el valor undefined
+       o null explícitamente de ser necesario) */
+    d = 5;
+    delete d;
+    // Lo siguiente ocasionaría error:
+    //console.log( d );
+    var f = 11;
+    delete f; // no tiene efecto
+    console.log( f );
+    f = undefined;
+    console.log( f );
+
+    /* Operador typeof: tipo de datos */
+    console.log( typeof x );
+
+    /* Operador void: evalúa una expresión pero sin retornar ningún valor. */
+    console.log( void( 2 + 2 ) );
+
+    /***** Operadores de Relación *****/
+
+    // Verificar si un objeto o arreglo tiene una propiedad dada
+    var n = [ 'Bart', 'Lisa', 'Maggie' ];
+    console.log( 'Bart' in n ); // falso, para arreglos, podemos verificar
+                                // índices y/o propiedades
+    console.log( 1 in n ); // true, existe el índice 1 en el arreglo
+    console.log( 10 in n ); // false
+    console.log( 'length' in n ); // true, los arreglos tienen la propiedad length
+    var personaje = {
+      nombre: 'Bart',
+      apellido: 'Simpson'
+    };
+    console.log( 'nombre' in personaje ); // true
+    console.log( 'edad' in personaje ); // false
+
+    // Verificar si un objeto es instancia de un tipo/clase
+    console.log( personaje instanceof Object ); // true
+    console.log( x instanceof Object ); // false
+    console.log( n instanceof Array ); // true: los arreglos son también objetos
+  </script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>JS: Eventos</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <h1>JS: Eventos</h1>
+  <form>
+    <input type="text" name="texto" id="texto" placeholder="Escriba para probar...">
+    <select name="lista" id="lista">
+      <option>Ninguno</option>
+      <option value="1">Uno</option>
+      <option value="2">Dos</option>
+    </select>
+    <a href="http://www.google.com">Ir a www.google.com</a>
+  </form>
+  <script>
+    /* Aunque podemos asociar manejadores de eventos directamente en la
+       definición de cada elemento en HTML, la mejor práctica es
+       agregarlos vía JS */
+    /* Podemos usar [elemento].on_[evento], o [elemento].addEventListener */
+    window.onload = function(){
+      console.log('Se ha cargado el documento');
+    };
+
+    var campo_texto = document.getElementById("texto");
+
+    campo_texto.addEventListener("focus", function(){
+      console.log( "El campo de texto aceptó el foco" );
+    });
+    campo_texto.addEventListener("blur", function(){
+      console.log( "El campo de texto perdió el foco" );
+    });
+    /* Todos los manejadores de evento reciben como primer parámetro
+       un objeto con el evento desencadenado.  Si queremos tener
+       acceso a ciertas propiedades de dicho evento, o incluso
+       prevenir su ejecución, podemos incluirlo */
+    campo_texto.addEventListener("keydown", function( e ){
+      console.log( "Hemos recibido keydown en el campo de texto: "
+                   + e.which ); // código de tecla presionada
+    });
+    campo_texto.addEventListener("change", function(){
+      console.log( "Hubo un cambio en el valor del campo de texto" );
+    });
+
+    var campo_lista = document.getElementById("lista");
+    campo_lista.addEventListener("change", function() {
+      var valorSeleccionado = this.options[this.selectedIndex].value;
+      console.log( "Cambió la selección. El valor es " + valorSeleccionado );
+    });
+
+    /* Agregamos un evento para confirmar la navegación al enlace */
+    var enlace = document.querySelector('a');
+
+    enlace.addEventListener( "click", function (e){
+      console.log( "Hemos recibido un clic" );
+      var destino = this.getAttribute("href");
+      if ( confirm( "¿Está seguro de que desea ir hacia '"+ destino +"'?" ) ) {
+        alert('Adiós...');
+      }
+      else {
+        // evitar la acción predeterminada (navegar hacia el enlace)
+        e.preventDefault();
+        console.log( "Cancelamos la navegación del enlace" );
+
+        alert('Enviaremos el foco hacia el campo de texto');
+        // desencadenamos manualmente el evento focus
+        campo_texto.focus();
+      }
+    });
+  </script>
+</body>
+</html>

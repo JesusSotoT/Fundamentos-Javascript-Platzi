@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Ejemplos de manejadores de eventos con JQuery</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+  <h1>Probar manejo de eventos</h1>
+  <p>Active la consola web y pruebe escribiendo, seleccionando y pulsando sobre los elementos</p>
+  <form>
+    <input type="text" name="texto" id="texto" placeholder="Escriba para probar...">
+    <select name="lista" id="lista">
+      <option>Ninguno</option>
+      <option value="1">Uno</option>
+      <option value="2">Dos</option>
+    </select>
+    <a href="http://www.google.com">Ir a www.google.com</a>
+  </form>
+  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script>
+  $( document ).ready(function() {
+
+    /* Utilizamos los "atajos" para manejadores de eventos */
+    $('input:text')
+      .focus(function(){
+        console.log( "El campo de texto aceptó el foco" );
+      })
+      .blur(function(){
+        console.log( "El campo de texto perdió el foco" );
+      })
+      .keydown(function( e ){
+        console.log( "Hemos recibido keydown con la tecla " + e.which );
+      })
+      .keyup(function( e ){
+        console.log( "Hemos recibido keyup con la tecla " + e.which );
+      })
+      .change(function( e ){
+        console.log( "Hubo un cambio en el campo de texto" );
+      });
+
+    /* También podemos utilizar el método genérico "on" para definir manejadores */
+    $('select').on( 'change', function(){
+      var valorSeleccionado = $( this ).val();
+      console.log( "Cambió la selección. El valor seleccionado es " + valorSeleccionado );
+    });
+
+    $('a').click(function(e){
+      console.log( "Hemos recibido un clic en el enlace" );
+      var destino = $(this).attr('href');
+      if ( confirm( "¿Está seguro de que desea navegar hacia '"+ destino +"'?" ) ) {
+        alert('Adiós!!!');
+      }
+      else {
+        // evitar la acción predeterminada (navegar hacia el enlace)
+        e.preventDefault();
+        console.log( "Cancelamos la navegación del enlace" );
+
+        alert('Enviaremos el foco hacia el campo de texto');
+        // desencadenamos manualmente el evento focus
+        $('#texto').focus();
+      }
+    });
+
+    /* Pueden definirse varios manejadores para los eventos sobre elementos */
+    $('select').on( 'change', function(){
+      console.log( 'Otro manejador apilado sobre la lista' );
+    });
+
+    /* O incluso desactivar los manejadores ("off") */
+    $( "select" ).off( "change" );
+  });
+  </script>
+</body>
+</html>

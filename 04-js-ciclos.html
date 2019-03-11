@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>JS: Ciclos</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <h1>JS: Ciclos</h1>
+  <form name="form1">
+    <p>
+      <label for="campus">Campus seleccionado(s)</label> <br>
+      <select name="campus" id="campus" multiple style="width:120px;height:150px;">
+        <option value="1">Springfield</option>
+        <option value="3">Piedradura</option>
+        <option value="2">Villa Chica</option>
+        <option value="4">Ciudad Gótica</option>
+        <option value="5">Yellowstone</option>
+        <option value="6">Río</option>
+        <option value="6">Los Ángeles</option>
+      </select>
+    </p>
+    <p>
+      <!-- Aquí asociamos la ejecución de una función en JS con el "clic" del botón,
+           para ilustrar nuestro ejemplo. Veremos más detalles (y mejores maneras)
+           de lograr esto posteriormente -->
+      <button id="btn" type="button"
+               onclick="alert( contar_lista(document.form1.campus) )">
+        Contar selección
+      </button>
+
+      <button id="btn" type="button"
+               onclick="jugar_v1()">
+        Jugar adivinanza (v1)
+      </button>
+
+      <button id="btn" type="button"
+               onclick="jugar_v2()">
+        Jugar adivinanza (v2)
+      </button>
+    </p>
+  </form>
+
+  <script>
+  /* El ciclo "for" se usa comúnmente cuando conocemos de antemano
+     la cantidad de veces a iterar (o un conjunto de elementos/objetos
+     que vamos a recorrer) */
+  var contador;
+  // Forma "clásica" de for: inicio; condición final; incremento
+  for (contador = 0; contador < 5; contador++) {
+    console.log( 'Iteración número ' + contador );
+  }
+
+  /* Utilizaremos un ciclo para determinar cuántos elementos han sido seleccionados
+     en una lista de selección (de un formulario) */
+  function contar_lista( lista ) {
+    var seleccionados = 0;
+    // nótese que podemos declarar la variable de control directamente en el "for"
+    for ( var i = 0; i < lista.options.length; i++ ) {
+      if ( lista.options[i].selected ) {
+        seleccionados++;
+      }
+    }
+    return seleccionados;
+  }
+
+  /* Podemos utilizar el ciclo "while" cuando la cantidad de iteraciones a realizar
+     puede no ser fija, pero está determinada por una condición lógica. Si queremos
+     evaluar la condición al principio, usamos "while" y si la queremos evaluar al
+     final, usamos "do ... while". Simularemos un "juego" de adivinanza con un
+     número (seudo)aleatorio para ilustrar */
+  function jugar_v1() {
+    var aleatorio = Math.floor((Math.random() * 10) + 1); // convertir del 1 al 10
+
+    var respuesta;
+    var intentos = 0;
+    while ( respuesta != aleatorio ) {
+      intentos++;
+      respuesta = prompt("Tengo un número del 1 al 10. ¿Adivinas?");
+    }
+    alert("Adivinaste en " + intentos + " intentos");
+  }
+
+  /* Utilizaremos una variación del juego anterior para ilustrar la ruptura del ciclo */
+  function jugar_v2() {
+    var aleatorio = Math.floor((Math.random() * 10) + 1); // convertir del 1 al 10
+
+    var respuesta;
+    var intentos = 0;
+    do {
+      respuesta = prompt("Tengo un número del 1 al 10. ¿Adivinas?");
+      if ( respuesta === null ) { // cuando presionamos "Cancelar"
+        break; // ruptura del ciclo
+      }
+      if ( respuesta < 1 || respuesta > 10 ) {
+        alert("Respuesta no inválida, intenta de nuevo");
+        continue; // seguir intentando, no se cuenta el intento
+      }
+      intentos++;
+    } while ( respuesta != aleatorio  );
+
+    if ( respuesta == aleatorio ) {
+      alert("Adivinaste en " + intentos + " intentos");
+    }
+    else {
+      alert("Abandonaste con "+ intentos +" intentos antes de adivinar el número "
+            + aleatorio);
+    }
+  }
+
+  </script>
+</body>
+</html>

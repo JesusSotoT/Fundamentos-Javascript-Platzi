@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>JS: Estructuras y tipos de datos</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <h1>JS: Estructuras y tipos de datos</h1>
+  <script>
+  var n = 394; // número entero
+  n = 3.1416e-2; // número de punto flotante: 0.031416
+  console.log( n );
+  n = 011; // número octal: 9
+  console.log( n );
+  n = 0xcae; // número hexadecimal: 3246
+  console.log( n );
+
+  n = -4; // entero negativo
+
+  /* en expresiones con el operador "+" que involucran cadenas 
+     y números, éstos son convertidos a cadenas */
+  console.log( n + ' es un entero negativo' );
+  console.log( "42" - 12 ); // 30
+  console.log( "42" + 12 ); // "4212"
+
+  // Forzar a interpretación como número
+  console.log( "1.1" + "1.1" ); // "1.11.1"
+  console.log( (+"1.1") + (+"1.1") ); // 2.2
+  console.log( parseFloat("1.1") + parseFloat("1.1") ); // 2.2
+
+  /* Lo siguiente no ocasiona error, ya que en JS las variables
+     no se declaran (ni tienen) un tipo específico de datos,
+     pudiendo almacenar valores de cualquier tipo */
+  n = "JS";
+
+  n = 1;
+  if ( n ) {
+    console.log('cierto');
+    n = 0;
+  }
+  if ( n ) {
+    console.log('cierto');
+  }
+  else {
+    // 0 se interpreta como falso en una expresión lógica
+    console.log('falso');
+  }
+  /* Para verificar explícitamente un valor especial lógico
+     ( true, false ), no definido (undefined), o nulo (null)
+     es recomendable utilizar === */
+  n = 1;
+  if ( n === true ) {
+    console.log('cierto');
+  }
+
+  /* Podemos definir arreglos encerrando elementos entre
+     corchetes [], separados por comas. Se recomienda no dejar
+     comas extra al final */
+  n = [ 'Bart', 'Lisa', 'Maggie' ];
+  var arreglo = []; // inicializar un arreglo vacío
+  // Acceder a elementos individuales mediante el índice
+  console.log( n[0] ); // Bart
+  console.log( n[5] ); // undefined
+  // si dejamos comas extra intermedias, se crean elementos vacíos
+  n = [ 'Bart', , 'Lisa', 'Maggie' ];
+  console.log( n );
+
+  // Longitud (cantidad de elementos) del arreglo
+  console.log( "'n' tiene " + n.length + " elementos" );
+  /* Iterar sobre todos los elementos. Nótese lo que sucede al
+     concatener con un elemento undefined */
+  for ( var i = 0; i < n.length; i++ ) {
+    console.log( n[i] + ' Simpson' );
+  }
+
+  // Agregar elemento al arreglo (al final)
+  n[n.length] = 'Homero';
+  n.push( 'Marge' );
+  console.log( n );
+
+  /* Un objeto puede almacenar propiedades con valores. También
+     pueden especificarse métodos (funciones) */
+  var personaje = {
+    nombre: 'Bart',
+    edad: 12,
+    apellido: 'Flanders',
+    /* "this" es una expresión que hace referencia a la misma instancia
+       (objeto) que ha invocado la función */
+    nombre_completo: function() {
+      return this.nombre + ' ' + this.apellido;
+    }
+  };
+
+  // los objetos sí pueden ser modificados dentro de una función
+  function corregir( persona ) {
+    persona.apellido = 'Simpson';
+  }
+
+  corregir( personaje );
+  console.log( personaje.nombre_completo() );
+
+  // para conocer el tipo de datos de una variable, usamos typeof
+  console.log( typeof( personaje ) ); // object
+
+  /* Incluso podemos iterar sobre los miembros de un objeto */
+  for ( miembro in personaje ) {
+    var informacion = 'Atributo: ' + miembro +
+                      ' | Tipo: ' + typeof( personaje[miembro] );
+    if ( typeof( personaje[miembro] ) != 'function' ) {
+      informacion += ' | Valor: ' + personaje[miembro];
+    }
+    console.log( informacion );
+  }
+
+  </script>
+</body>
+</html>
